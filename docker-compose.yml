@@ -12,6 +12,8 @@ web:
         - ~/apps:/apps # all apps
         - ~/apps/volumes/nginx/sites-available:/etc/nginx/sites-available # nginx sites ( in case you recreate the container )
         - ~/apps/volumes/nginx/sites-enabled:/etc/nginx/sites-enabled # nginx sites ( in case you recreate the container )
+    links:
+        - mariadb
 
 mariadb:
     image: tutum/mariadb
