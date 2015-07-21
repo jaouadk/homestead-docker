@@ -31,7 +31,7 @@ apt-get update
 
 # Install Some Basic Packages
 
-apt-get install -y build-essential curl dos2unix gcc git libmcrypt4 libpcre3-dev \
+apt-get install -y build-essential curl dos2unix gcc git git-flow libmcrypt4 libpcre3-dev \
 make python2.7-dev python-pip re2c supervisor unattended-upgrades whois vim
 
 # Install A Few Helpful Python Packages
