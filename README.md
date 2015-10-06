@@ -30,6 +30,10 @@ Assuming you mapped your apps folder to ```/apps``` (you can change mappings in 
 ```shell
 cd / && ./serve.sh myapp.dev /apps/myapp/public
 ```
+In the host, update ``` /etc/hosts ``` to include your app domain:
+```shell
+127.0.0.1               myapp.dev
+```
 
 ### Everything should work - enjoy !!!
 Our web container starts nginx, php5-fpm, redis, beanstalk. and has gruntjs, gulp, bower.

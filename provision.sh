@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 # Laravel homestead original provisioning script
+# https://github.com/laravel/settler
+
 # Update Package List
 
 apt-get update
@@ -8,6 +10,7 @@ apt-get update
 apt-get upgrade -y
 
 # Install ssh server
+
 apt-get -y install openssh-server pwgen
 mkdir -p /var/run/sshd 
 sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config
@@ -68,9 +71,13 @@ ln -s /etc/php5/mods-available/mailparse.ini /etc/php5/cli/conf.d/20-mailparse.i
 curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 
-# Create our user
+# Create homestead user
+
 adduser homestead
 usermod -p $(echo secret | openssl passwd -1 -stdin) homestead
+
+# Add homestead to the sudo group
+
 adduser homestead sudo
 
 # Add Composer Global Bin To Path
@@ -109,6 +116,7 @@ sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php5/fpm/php.ini
 sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php5/fpm/php.ini
 
 # Enable Remote xdebug
+
 echo "xdebug.remote_enable = 1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
 echo "xdebug.remote_connect_back = 1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
 echo "xdebug.remote_port = 9000" >> /etc/php5/fpm/conf.d/20-xdebug.ini
@@ -159,6 +167,7 @@ sudo sed -i "s/#START=yes/START=yes/" /etc/default/beanstalkd
 sudo /etc/init.d/beanstalkd start
 
 # Configure nginx site
+
 block="server {
     listen 80 default_server;
     listen [::]:80 default_server ipv6only=on;
