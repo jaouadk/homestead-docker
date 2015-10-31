@@ -1,5 +1,6 @@
 web:
     image: shincoder/homestead
+    restart: always
     ports:
         - "8000:80" # web
         - "2222:22" # ssh
@@ -17,6 +18,7 @@ web:
 
 mariadb:
     image: tutum/mariadb
+    restart: always
     ports:
         - "33060:3306"
     environment:
