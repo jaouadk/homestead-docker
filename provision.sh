@@ -12,7 +12,7 @@ apt-get upgrade -y
 # Install ssh server
 
 apt-get -y install openssh-server pwgen
-mkdir -p /var/run/sshd 
+mkdir -p /var/run/sshd
 sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config
 sed -i "s/UsePAM.*/UsePAM no/g" /etc/ssh/sshd_config
 sed -i "s/PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config
@@ -122,6 +122,8 @@ echo "xdebug.remote_port = 9000" >> /etc/php5/fpm/conf.d/20-xdebug.ini
 echo "xdebug.var_display_max_depth = -1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
 echo "xdebug.var_display_max_children = -1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
 echo "xdebug.var_display_max_data = -1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
+
+echo "xdebug.max_nesting_level = 500" >> /etc/php5/fpm/conf.d/20-xdebug.ini
 
 # Set The Nginx & PHP-FPM User
 
