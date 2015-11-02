@@ -24,9 +24,7 @@ apt-get install -y software-properties-common nano
 apt-add-repository ppa:nginx/stable -y
 apt-add-repository ppa:rwky/redis -y
 apt-add-repository ppa:chris-lea/node.js -y
-# removing ondrej ppa since it prevents installation of php5-memcached
-# this will install php 5.5.9 instead of php 5.5.12
-# apt-add-repository ppa:ondrej/php5 -y
+apt-add-repository ppa:ondrej/php5-5.6 -y
 
 # Update Package Lists
 
