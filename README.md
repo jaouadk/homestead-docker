@@ -37,4 +37,7 @@ In the host, update ``` /etc/hosts ``` to include your app domain:
 
 ### Everything should work - enjoy !!!
 Our web container starts nginx, php5-fpm, redis, beanstalk. and has gruntjs, gulp, bower.
-some relevant port have been added to docker-compose.yml ( livereload standard port, karma server port ), change them if you need to.
+some relevant ports have been added to docker-compose.yml ( livereload standard port, karma server port ), change them if you need to.
+
+### Notes
+- Use docker's local IP address to connect to your database, it's usually **172.17.42.1**, ``ifconfig`` in your terminal to make sure you got the correct IP address.
