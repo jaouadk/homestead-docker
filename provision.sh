@@ -24,7 +24,7 @@ apt-get install -y software-properties-common nano
 apt-add-repository ppa:nginx/stable -y
 apt-add-repository ppa:rwky/redis -y
 apt-add-repository ppa:chris-lea/node.js -y
-apt-add-repository ppa:ondrej/php5-5.6 -y
+# apt-add-repository ppa:ondrej/php5-5.6 -y
 
 # Update Package Lists
 
