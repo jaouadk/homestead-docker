@@ -40,4 +40,4 @@ Our web container starts nginx, php5-fpm, redis, beanstalk. and has gruntjs, gul
 some relevant ports have been added to docker-compose.yml ( livereload standard port, karma server port ), change them if you need to.
 
 ### Notes
-- Use docker's local IP address to connect to your database, it's usually **172.17.42.1**, ``ifconfig`` in your terminal to make sure you got the correct IP address.
+- Use docker's local IP address to connect to your database, it's usually **172.17.0.1**, ``ifconfig`` in your terminal to make sure you got the correct IP address.
