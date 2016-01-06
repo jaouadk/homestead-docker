@@ -9,6 +9,12 @@ apt-get update
 
 apt-get upgrade -y
 
+# Force Locale
+
+echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
+locale-gen en_US.UTF-8
+export LANG=en_US.UTF-8 # fixes php 5.6 install through ondrej ppa
+
 # Install ssh server
 
 apt-get -y install openssh-server pwgen
@@ -24,7 +30,7 @@ apt-get install -y software-properties-common nano
 apt-add-repository ppa:nginx/stable -y
 apt-add-repository ppa:rwky/redis -y
 apt-add-repository ppa:chris-lea/node.js -y
-# apt-add-repository ppa:ondrej/php5-5.6 -y
+apt-add-repository ppa:ondrej/php5-5.6 -y
 
 # Update Package Lists
 
@@ -58,9 +64,16 @@ php5-memcached php5-redis
 ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available
 sudo php5enmod mcrypt
 
-# Install Mailparse PECL Extension
+# Install Mailparse PECL Extension (version 2.1.6)
 
-pecl install -Z mailparse
+mkdir -p /tmp/mailparse/
+cd /tmp/mailparse
+wget http://pecl.php.net/get/mailparse-2.1.6.tgz
+echo "0f84e1da1d074a4915a9bcfe2319ce84  mailparse-2.1.6.tgz" > md5sums
+md5sum -c md5sums
+tar xfz mailparse-2.1.6.tgz
+cd mailparse-2.1.6 && phpize && ./configure && make && make install
+cd / && rm -rf /tmp/mailparse
 echo "extension=mailparse.so" > /etc/php5/mods-available/mailparse.ini
 ln -s /etc/php5/mods-available/mailparse.ini /etc/php5/cli/conf.d/20-mailparse.ini
 
@@ -208,5 +221,3 @@ block="server {
 
 cat > /etc/nginx/sites-enabled/default
 echo "$block" > "/etc/nginx/sites-enabled/default"
-service nginx restart
-service php5-fpm restart
