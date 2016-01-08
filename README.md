@@ -9,6 +9,7 @@ please refer to these tutorials:
 ### Build the homestead image
 ```shell
 git clone https://github.com/shincoder/homestead-docker.git
+docker-machine create -d virtualbox homestead;
 cd homestead-docker
 docker build -t shincoder/homestead .
 ```
