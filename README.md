@@ -4,7 +4,13 @@ Create a homestead docker container for your development env. ( files taken from
 ### Install docker && docker compose
 please refer to these tutorials:
 * install docker (https://docs.docker.com/installation/ubuntulinux/)
-* install docker compose (fig alternative) (https://docs.docker.com/compose/install/)
+```shell 
+curl -sSL https://get.docker.com/ | sh
+```
+* install docker compose (https://docs.docker.com/compose/install/)
+```shell
+curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+```
 
 ### Build the homestead image
 ```shell
@@ -41,3 +47,7 @@ some relevant ports have been added to docker-compose.yml ( livereload standard 
 
 ### Notes
 - Use docker's local IP address to connect to your database, it's usually **172.17.0.1**, ``ifconfig`` in your terminal to make sure you got the correct IP address.
+
+
+### TODO
+- [ ] use supervisor (should monitor: redis, nginx, php-fpm, beanstalk, ssh server)
