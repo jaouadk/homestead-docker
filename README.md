@@ -47,6 +47,7 @@ some relevant ports have been added to docker-compose.yml ( livereload standard 
 
 ### Notes
 - Use docker's local IP address to connect to your database, it's usually **172.17.0.1**, ``ifconfig`` in your terminal to make sure you got the correct IP address.
+- Databases: by default mariadb is used as a database, but you are free to use any database you want: choose from these excellent images by Tutum: [tutum/mysql](https://github.com/tutumcloud/mysql) or [tutum/postgresql](https://github.com/tutumcloud/postgresql), they expose different environment variables, so don't forget to update your docker-compose file accordingly.
 
 
 ### TODO
