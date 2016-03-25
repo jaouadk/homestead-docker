@@ -21,12 +21,13 @@ sed -i "s/UsePAM.*/UsePAM no/g" /etc/ssh/sshd_config
 sed -i "s/PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config
 
 # Install Some PPAs
-apt-get install -y software-properties-common nano
+apt-get install -y software-properties-common nano curl
 
 apt-add-repository ppa:nginx/stable -y
 apt-add-repository ppa:rwky/redis -y
-apt-add-repository ppa:chris-lea/node.js -y
 apt-add-repository ppa:ondrej/php5-5.6 -y
+
+curl --silent --location https://deb.nodesource.com/setup_5.x | bash -
 
 # Update Package Lists
 apt-get update
@@ -40,7 +41,7 @@ usermod -aG sudo homestead
 usermod -aG www-data homestead
 
 # Install Some Basic Packages
-apt-get install -y build-essential curl dos2unix gcc git git-flow libmcrypt4 libpcre3-dev \
+apt-get install -y build-essential dos2unix gcc git git-flow libmcrypt4 libpcre3-dev \
 make python2.7-dev python-pip re2c supervisor unattended-upgrades whois vim
 
 # Install A Few Helpful Python Packages
