@@ -60,7 +60,7 @@ php5-memcached php5-redis
 
 # Make MCrypt Available
 ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available
-sudo php5enmod mcrypt
+php5enmod mcrypt
 
 # Install Mailparse PECL Extension (version 2.1.6)
 mkdir -p /tmp/mailparse/
@@ -87,10 +87,10 @@ sudo su homestead <<'EOF'
 EOF
 
 # Set Some PHP CLI Settings
-sudo sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php5/cli/php.ini
-sudo sed -i "s/display_errors = .*/display_errors = On/" /etc/php5/cli/php.ini
-sudo sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php5/cli/php.ini
-sudo sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php5/cli/php.ini
+sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php5/cli/php.ini
+sed -i "s/display_errors = .*/display_errors = On/" /etc/php5/cli/php.ini
+sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php5/cli/php.ini
+sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php5/cli/php.ini
 
 # Install Nginx & PHP-FPM
 apt-get install -y nginx php5-fpm
@@ -101,6 +101,7 @@ rm /etc/nginx/sites-available/default
 # Setup Some PHP-FPM Options
 ln -s /etc/php5/mods-available/mailparse.ini /etc/php5/fpm/conf.d/20-mailparse.ini
 
+sed -i "s/.*daemonize.*/daemonize = no/" /etc/php5/fpm/php-fpm.conf
 sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php5/fpm/php.ini
 sed -i "s/display_errors = .*/display_errors = On/" /etc/php5/fpm/php.ini
 sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini
@@ -119,6 +120,7 @@ echo "xdebug.var_display_max_data = -1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
 echo "xdebug.max_nesting_level = 500" >> /etc/php5/fpm/conf.d/20-xdebug.ini
 
 # Set The Nginx & PHP-FPM User
+sed -i '1 idaemon off;' /etc/nginx/nginx.conf
 sed -i "s/user www-data;/user homestead;/" /etc/nginx/nginx.conf
 sed -i "s/# server_names_hash_bucket_size.*/server_names_hash_bucket_size 64;/" /etc/nginx/nginx.conf
 
@@ -142,7 +144,10 @@ apt-get install -y sqlite3 libsqlite3-dev
 apt-get install -y redis-server memcached beanstalkd
 
 # Configure Beanstalkd
-sudo sed -i "s/#START=yes/START=yes/" /etc/default/beanstalkd
+sed -i "s/#START=yes/START=yes/" /etc/default/beanstalkd
+
+# Configure Redis
+sed -i "s/daemonize yes/daemonize no/" /etc/redis/redis.conf
 
 # Configure default nginx site
 block="server {

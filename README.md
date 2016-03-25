@@ -50,4 +50,4 @@ some relevant ports have been added to docker-compose.yml ( livereload standard 
 
 
 ### TODO
-- [ ] use supervisor (should monitor: redis, nginx, php-fpm, beanstalk, ssh server)
+- [x] use supervisor (should monitor: redis, nginx, php-fpm, beanstalk, ssh server)
