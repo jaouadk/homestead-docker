@@ -4,8 +4,8 @@
 # https://github.com/laravel/settler
 
 # Update Package List
-apt-get update
-apt-get upgrade -y
+apt update
+apt upgrade -y
 
 # Force Locale
 echo "LC_ALL=en_US.UTF-8" >> /etc/default/locale
@@ -14,23 +14,19 @@ locale-gen en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Install ssh server
-apt-get -y install openssh-server pwgen
+apt -y install openssh-server pwgen
 mkdir -p /var/run/sshd
 sed -i "s/UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config
 sed -i "s/UsePAM.*/UsePAM no/g" /etc/ssh/sshd_config
 sed -i "s/PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config
 
 # Install Some PPAs
-apt-get install -y software-properties-common nano curl
-
-apt-add-repository ppa:nginx/stable -y
-apt-add-repository ppa:rwky/redis -y
-apt-add-repository ppa:ondrej/php5-5.6 -y
+apt install -y software-properties-common nano curl
 
 curl --silent --location https://deb.nodesource.com/setup_5.x | bash -
 
 # Update Package Lists
-apt-get update
+apt update
 
 # Create homestead user
 adduser homestead
@@ -41,7 +37,7 @@ usermod -aG sudo homestead
 usermod -aG www-data homestead
 
 # Install Some Basic Packages
-apt-get install -y build-essential dos2unix gcc git git-flow libmcrypt4 libpcre3-dev \
+apt install -y build-essential dos2unix gcc git git-flow libmcrypt4 libpcre3-dev \
 make python2.7-dev python-pip re2c supervisor unattended-upgrades whois vim
 
 # Install A Few Helpful Python Packages
@@ -53,27 +49,19 @@ pip install python-simple-hipchat
 ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 # Install PHP Stuffs
-apt-get install -y php5-cli php5-dev php-pear \
-php5-mysql php5-pgsql php5-sqlite \
-php5-apcu php5-json php5-curl php5-dev php5-gd \
-php5-gmp php5-imap php5-mcrypt php5-xdebug \
-php5-memcached php5-redis
+apt install -y php-cli php-dev php-pear \
+php-mysql php-pgsql php-sqlite3 \
+php-apcu php-json php-curl php-gd \
+php-gmp php-imap php-mcrypt php-xdebug \
+php-memcached php-redis
 
 # Make MCrypt Available
-ln -s /etc/php5/conf.d/mcrypt.ini /etc/php5/mods-available
-php5enmod mcrypt
+ln -s /etc/php/7.0/conf.d/mcrypt.ini /etc/php/7.0/mods-available
+phpenmod mcrypt
 
-# Install Mailparse PECL Extension (version 2.1.6)
-mkdir -p /tmp/mailparse/
-cd /tmp/mailparse
-wget http://pecl.php.net/get/mailparse-2.1.6.tgz
-echo "0f84e1da1d074a4915a9bcfe2319ce84  mailparse-2.1.6.tgz" > md5sums
-md5sum -c md5sums
-tar xfz mailparse-2.1.6.tgz
-cd mailparse-2.1.6 && phpize && ./configure && make && make install
-cd / && rm -rf /tmp/mailparse
-echo "extension=mailparse.so" > /etc/php5/mods-available/mailparse.ini
-ln -s /etc/php5/mods-available/mailparse.ini /etc/php5/cli/conf.d/20-mailparse.ini
+# Install Mailparse PECL Extension
+pecl install -Z mailparse
+echo "extension=mailparse.so" > /etc/php/7.0/mods-available/mailparse.ini
 
 # Install Composer
 curl -sS https://getcomposer.org/installer | php
@@ -88,61 +76,61 @@ sudo su homestead <<'EOF'
 EOF
 
 # Set Some PHP CLI Settings
-sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php5/cli/php.ini
-sed -i "s/display_errors = .*/display_errors = On/" /etc/php5/cli/php.ini
-sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php5/cli/php.ini
-sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php5/cli/php.ini
+sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.0/cli/php.ini
+sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.0/cli/php.ini
+sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.0/cli/php.ini
+sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.0/cli/php.ini
 
 # Install Nginx & PHP-FPM
-apt-get install -y nginx php5-fpm
+apt install -y nginx php-fpm
 
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
 
 # Setup Some PHP-FPM Options
-ln -s /etc/php5/mods-available/mailparse.ini /etc/php5/fpm/conf.d/20-mailparse.ini
+ln -s /etc/php/7.0/mods-available/mailparse.ini /etc/php/7.0/fpm/conf.d/20-mailparse.ini
 
-sed -i "s/.*daemonize.*/daemonize = no/" /etc/php5/fpm/php-fpm.conf
-sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php5/fpm/php.ini
-sed -i "s/display_errors = .*/display_errors = On/" /etc/php5/fpm/php.ini
-sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php5/fpm/php.ini
-sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php5/fpm/php.ini
-sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php5/fpm/php.ini
+sed -i "s/.*daemonize.*/daemonize = no/" /etc/php/7.0/fpm/php-fpm.conf
+sed -i "s/error_reporting = .*/error_reporting = E_ALL/" /etc/php/7.0/fpm/php.ini
+sed -i "s/display_errors = .*/display_errors = On/" /etc/php/7.0/fpm/php.ini
+sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/7.0/fpm/php.ini
+sed -i "s/memory_limit = .*/memory_limit = 512M/" /etc/php/7.0/fpm/php.ini
+sed -i "s/;date.timezone.*/date.timezone = UTC/" /etc/php/7.0/fpm/php.ini
 
 # Enable Remote xdebug
-echo "xdebug.remote_enable = 1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
-echo "xdebug.remote_connect_back = 1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
-echo "xdebug.remote_port = 9000" >> /etc/php5/fpm/conf.d/20-xdebug.ini
+echo "xdebug.remote_enable = 1" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
+echo "xdebug.remote_connect_back = 1" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
+echo "xdebug.remote_port = 9000" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
 
-echo "xdebug.var_display_max_depth = -1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
-echo "xdebug.var_display_max_children = -1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
-echo "xdebug.var_display_max_data = -1" >> /etc/php5/fpm/conf.d/20-xdebug.ini
+echo "xdebug.var_display_max_depth = -1" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
+echo "xdebug.var_display_max_children = -1" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
+echo "xdebug.var_display_max_data = -1" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
 
-echo "xdebug.max_nesting_level = 500" >> /etc/php5/fpm/conf.d/20-xdebug.ini
+echo "xdebug.max_nesting_level = 500" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
 
 # Set The Nginx & PHP-FPM User
 sed -i '1 idaemon off;' /etc/nginx/nginx.conf
 sed -i "s/user www-data;/user homestead;/" /etc/nginx/nginx.conf
 sed -i "s/# server_names_hash_bucket_size.*/server_names_hash_bucket_size 64;/" /etc/nginx/nginx.conf
 
-sed -i "s/user = www-data/user = homestead/" /etc/php5/fpm/pool.d/www.conf
-sed -i "s/group = www-data/group = homestead/" /etc/php5/fpm/pool.d/www.conf
+sed -i "s/user = www-data/user = homestead/" /etc/php/7.0/fpm/pool.d/www.conf
+sed -i "s/group = www-data/group = homestead/" /etc/php/7.0/fpm/pool.d/www.conf
 
-sed -i "s/;listen\.owner.*/listen.owner = homestead/" /etc/php5/fpm/pool.d/www.conf
-sed -i "s/;listen\.group.*/listen.group = homestead/" /etc/php5/fpm/pool.d/www.conf
-sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php5/fpm/pool.d/www.conf
+sed -i "s/;listen\.owner.*/listen.owner = homestead/" /etc/php/7.0/fpm/pool.d/www.conf
+sed -i "s/;listen\.group.*/listen.group = homestead/" /etc/php/7.0/fpm/pool.d/www.conf
+sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.0/fpm/pool.d/www.conf
 
 # Install Node
-apt-get install -y nodejs
+apt install -y nodejs
 npm install -g grunt-cli
 npm install -g gulp
 npm install -g bower
 
 # Install SQLite
-apt-get install -y sqlite3 libsqlite3-dev
+apt install -y sqlite3 libsqlite3-dev
 
 # Install A Few Other Things
-apt-get install -y redis-server memcached beanstalkd
+apt install -y redis-server memcached beanstalkd
 
 # Configure Beanstalkd
 sed -i "s/#START=yes/START=yes/" /etc/default/beanstalkd
@@ -178,7 +166,7 @@ block="server {
 
     location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php5-fpm.sock;
+        fastcgi_pass unix:/run/php/php7.0-fpm.sock;
         fastcgi_index index.php;
         include fastcgi.conf;
     }
