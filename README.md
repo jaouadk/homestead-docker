@@ -4,7 +4,7 @@ Create a homestead docker container for your development env. ( files taken from
 ### Install docker && docker compose
 please refer to these tutorials:
 * install docker (https://docs.docker.com/installation/ubuntulinux/)
-```shell 
+```shell
 curl -sSL https://get.docker.com/ | sh
 ```
 * install docker compose (https://docs.docker.com/compose/install/)
@@ -16,7 +16,7 @@ curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose
 ```shell
 git clone https://github.com/shincoder/homestead-docker.git
 cd homestead-docker
-docker build -t shincoder/homestead .
+docker build -t shincoder/homestead:php5.6 .
 ```
 
 ### Launch your containers
