@@ -4,7 +4,7 @@ Create a homestead docker container for your development env. ( files taken from
 ### Install docker && docker compose
 please refer to these tutorials:
 * install docker (https://docs.docker.com/installation/ubuntulinux/)
-```shell 
+```shell
 curl -sSL https://get.docker.com/ | sh
 ```
 * install docker compose (https://docs.docker.com/compose/install/)
@@ -12,19 +12,21 @@ curl -sSL https://get.docker.com/ | sh
 curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 ```
 
-### Build the homestead image
+### Pull homestead image
 ```shell
-git clone https://github.com/shincoder/homestead-docker.git
-cd homestead-docker
-docker build -t shincoder/homestead .
+docker pull shincoder/homestead:php7.0
 ```
 
-### Launch your containers
+### Clone && Edit docker-compose.yml
+```shell
+git clone https://github.com/shincoder/homestead-docker.git
+```
+
+### Start your containers
 There are only two containers to run. web container ( includes everything except your database ), and mariadb container.
 ```shell
 sudo docker-compose up -d
 ```
-this will build the image, and start it.
 
 ### SSH into the container (password: secret):
 ```shell
@@ -41,14 +43,10 @@ In the host, update ``` /etc/hosts ``` to include your app domain:
 127.0.0.1               myapp.dev
 ```
 
-### Everything should work - enjoy !!!
-Our web container starts nginx, php5-fpm, redis, beanstalk. and has gruntjs, gulp, bower.
+### That's it
+Our web container starts nginx, php-fpm, redis, beanstalk. and has gruntjs, gulp, bower...etc
 some relevant ports have been added to docker-compose.yml ( livereload standard port, karma server port ), change them if you need to.
 
 ### Notes
 - Use docker's local IP address to connect to your database. Run `docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${CID}`, where `${CID}` is docker container ID of the database
 - Databases: by default mariadb is used as a database, but you are free to use any database you want: choose from these excellent images by Tutum: [tutum/mysql](https://github.com/tutumcloud/mysql) or [tutum/postgresql](https://github.com/tutumcloud/postgresql), they expose different environment variables, so don't forget to update your docker-compose file accordingly.
-
-
-### TODO
-- [x] use supervisor (should monitor: redis, nginx, php-fpm, beanstalk, ssh server)
