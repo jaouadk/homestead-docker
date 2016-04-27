@@ -84,6 +84,9 @@ echo "xdebug.var_display_max_children = -1" >> /etc/php/7.0/fpm/conf.d/20-xdebug
 echo "xdebug.var_display_max_data = -1" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
 echo "xdebug.max_nesting_level = 500" >> /etc/php/7.0/fpm/conf.d/20-xdebug.ini
 
+# Not xdebug when on cli
+phpdismod -s cli xdebug
+
 # Set The Nginx & PHP-FPM User
 sed -i '1 idaemon off;' /etc/nginx/nginx.conf
 sed -i "s/user www-data;/user homestead;/" /etc/nginx/nginx.conf
