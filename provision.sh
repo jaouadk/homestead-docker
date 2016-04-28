@@ -42,7 +42,7 @@ apt-get install -y php-cli php-dev php-pear \
 php-mysql php-pgsql php-sqlite3 \
 php-apcu php-json php-curl php-gd \
 php-gmp php-imap php-mcrypt php-xdebug \
-php-memcached php-redis php-mbstring
+php-memcached php-redis php-mbstring php-zip
 
 # Nginx & PHP-FPM
 apt-get install -y nginx php-fpm
