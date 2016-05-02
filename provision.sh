@@ -24,6 +24,9 @@ apt-get install -y sudo software-properties-common nano curl \
 build-essential dos2unix gcc git git-flow libmcrypt4 libpcre3-dev apt-utils \
 make python2.7-dev python-pip re2c supervisor unattended-upgrades whois vim zip unzip
 
+# PPA
+apt-add-repository ppa:ondrej/php -y
+
 # Update Package Lists
 apt-get update
 
@@ -101,7 +104,7 @@ sed -i "s/;listen\.group.*/listen.group = homestead/" /etc/php/7.0/fpm/pool.d/ww
 sed -i "s/;listen\.mode.*/listen.mode = 0666/" /etc/php/7.0/fpm/pool.d/www.conf
 
 # Install Node
-curl --silent --location https://deb.nodesource.com/setup_5.x | bash -
+curl --silent --location https://deb.nodesource.com/setup_6.x | bash -
 apt-get install -y nodejs
 npm install -g grunt-cli
 npm install -g gulp
