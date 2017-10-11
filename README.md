@@ -1,5 +1,6 @@
 # Laravel homestead-docker
-Create a homestead docker container for your development env. ( files taken from laravel settler: provision.sh (modified) + serve.sh )
+Create a homestead docker container for your development env.
+(Adapted from laravel homestead provisionning script)
 
 ### Install docker && docker compose
 please refer to these tutorials:
@@ -9,7 +10,7 @@ curl -sSL https://get.docker.com/ | sh
 ```
 * install docker compose (https://docs.docker.com/compose/install/)
 ```shell
-curl -L https://github.com/docker/compose/releases/download/1.6.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 ```
 
 ### Pull homestead image
@@ -48,10 +49,13 @@ In the host, update ``` /etc/hosts ``` to include your app domain:
 ```
 
 ### That's it
-Our web container starts nginx, php-fpm, redis, beanstalk. and has gruntjs, gulp, bower...etc
-some relevant ports have been added to docker-compose.yml ( livereload standard port, karma server port ),
-change them if you need to.
+Our web container starts nginx, php-fpm, redis, beanstalk. and has npm, gulp, bower...etc
 
 ### Notes
-- Use docker's local IP address to connect to your database. ``` ifconfig ``` to find the IP used (usually 172.17.0.1).
-- Databases: by default mariadb is used as a database, but you are free to use any database you want: choose from these excellent images by Tutum: [tutum/mysql](https://github.com/tutumcloud/mysql) or [tutum/postgresql](https://github.com/tutumcloud/postgresql), they expose different environment variables, so don't forget to update your docker-compose file accordingly.
+- Since the web and database containers are linked you can use ```mysql``` as  the host in your ```.env``` file with an empty password to properly connect to your database.
+```
+DB_HOST=mysql
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=
+```

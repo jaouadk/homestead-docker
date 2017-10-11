@@ -1,11 +1,9 @@
 web:
-    image: shincoder/homestead:php7.0
-    restart: always
+    image: shincoder/homestead:php7.1
+    restart: unless-stopped
     ports:
         - "8000:80" # web
         - "2222:22" # ssh
-        - "35729:35729" # live reload
-        - "9876:9876" # karma server
     volumes:
         - ~/.composer:/home/homestead/.composer # composer caching
         - ~/.gitconfig:/home/homestead/.gitconfig # Git configuration ( access alias && config )
@@ -13,16 +11,14 @@ web:
         - ~/apps:/apps # all apps
         - ~/apps/volumes/nginx/sites-available:/etc/nginx/sites-available # nginx sites ( in case you recreate the container )
         - ~/apps/volumes/nginx/sites-enabled:/etc/nginx/sites-enabled # nginx sites ( in case you recreate the container )
+        - ~/volumes/nginx/ssl:/etc/nginx/ssl
     links:
-        - mariadb
+        - mysql
 
-mariadb:
-    image: tutum/mariadb
-    restart: always
-    ports:
-        - "33060:3306"
+mysql:
+    image: mysql:5.7
+    restart: unless-stopped
     environment:
-        MARIADB_USER: admin # cannot be changed ( for info. only )
-        MARIADB_PASS: root
+        MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     volumes:
-        - ~/apps/volumes/mysql:/var/lib/mysql # database files
+        - ~/volumes/mysql:/var/lib/mysql

@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Jaouad E. <jaouad.elmoussaoui@gmail.com>
+MAINTAINER "https://github.com/shincoder"
 
 ENV DEBIAN_FRONTEND noninteractive
 
