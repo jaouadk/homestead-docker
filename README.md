@@ -15,7 +15,7 @@ curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compos
 
 ### Pull homestead image
 ```shell
-docker pull shincoder/homestead:php7.0
+docker pull shincoder/homestead:php7.1
 ```
 
 ### Clone && Edit docker-compose.yml
@@ -56,6 +56,6 @@ Our web container starts nginx, php-fpm, redis, beanstalk. and has npm, gulp, bo
 ```
 DB_HOST=mysql
 DB_PORT=3306
-DB_USER=root
+DB_USERNAME=root
 DB_PASSWORD=
 ```
