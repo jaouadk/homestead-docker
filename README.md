@@ -10,7 +10,8 @@ curl -sSL https://get.docker.com/ | sh
 ```
 * install docker compose (https://docs.docker.com/compose/install/)
 ```shell
-curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+sudo curl -L https://github.com/docker/compose/releases/download/1.17.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 ### Pull homestead image
@@ -41,9 +42,12 @@ ssh -p 2222 homestead@localhost
 Assuming you mapped your apps folder to ```/apps``` (you can change mappings in the docker-compose.yml file,
 it's prefered to use absolute paths), you can do:
 ```shell
-cd / && ./serve.sh myapp.dev /apps/myapp/public
+cd /
+sudo ./serve.sh myapp.dev /apps/myapp/public
+sudo supervisorctl restart all
 ```
-In the host, update ``` /etc/hosts ``` to include your app domain:
+
+**In the host**, update ``` /etc/hosts ``` to include your app domain:
 ```shell
 127.0.0.1               myapp.dev
 ```
