@@ -22,7 +22,7 @@ sed -i "s/PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config
 
 # Basic packages
 apt-get install -y sudo software-properties-common nano curl \
-build-essential dos2unix gcc git git-flow libmcrypt4 libpcre3-dev apt-utils \
+build-essential dos2unix gcc git git-flow libpcre3-dev apt-utils \
 make python2.7-dev python-pip re2c supervisor unattended-upgrades whois vim zip unzip
 
 # PPA
@@ -45,15 +45,12 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 apt-get install -y php7.2-cli php7.2-dev \
 php7.2-mysql php7.2-pgsql php7.2-sqlite3 php7.2-soap \
 php7.2-json php7.2-curl php7.2-gd \
-php7.2-gmp php7.2-imap php7.2-mcrypt php-xdebug \
+php7.2-gmp php7.2-imap php-xdebug \
 php7.2-mbstring php7.2-zip \
 php-pear php-apcu php-memcached php-redis
 
 # Nginx & PHP-FPM
-apt-get install -y nginx php-fpm
-
-# Enable mcrypt
-phpenmod mcrypt
+apt-get install -y nginx php7.2-fpm
 
 # Install Composer
 curl -sS https://getcomposer.org/installer | php
@@ -64,7 +61,7 @@ printf "\nPATH=\"/home/homestead/.composer/vendor/bin:\$PATH\"\n" | tee -a /home
 
 # Laravel Envoy
 su homestead <<'EOF'
-/usr/local/bin/composer global require "laravel/envoy=~1.0"
+/usr/local/bin/composer global require "laravel/envoy=~1.5.0"
 EOF
 
 # Set Some PHP CLI Settings
