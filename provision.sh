@@ -45,9 +45,9 @@ ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 apt-get install -y php7.2-cli php7.2-dev \
 php7.2-mysql php7.2-pgsql php7.2-sqlite3 php7.2-soap \
 php7.2-json php7.2-curl php7.2-gd \
-php7.2-gmp php7.2-imap php7.2-xdebug \
+php7.2-gmp php7.2-imap php-xdebug \
 php7.2-mbstring php7.2-zip \
-php7.2-pear php7.2-apcu php7.2-memcached php7.2-redis \
+php-pear php-apcu php-memcached php-redis \
 php7.2-dom
 
 # Nginx & PHP-FPM
