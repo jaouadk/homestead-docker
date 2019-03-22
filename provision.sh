@@ -48,7 +48,7 @@ php-gmp php-imap php-mcrypt php-xdebug \
 php-memcached php-redis php-mbstring php-zip
 
 # Nginx & PHP-FPM
-apt-get install -y nginx php-fpm
+apt-get install -y nginx php7.0-fpm
 
 # Enable mcrypt
 phpenmod mcrypt
