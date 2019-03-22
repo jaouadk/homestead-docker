@@ -47,7 +47,8 @@ php7.1-mysql php7.1-pgsql php7.1-sqlite3 php7.1-soap \
 php7.1-json php7.1-curl php7.1-gd \
 php7.1-gmp php7.1-imap php7.1-mcrypt php-xdebug \
 php7.1-mbstring php7.1-zip \
-php-pear php-apcu php-memcached php-redis
+php-pear php-apcu php-memcached php-redis \
+php7.1-dom
 
 # Nginx & PHP-FPM
 apt-get install -y nginx php7.1-fpm
