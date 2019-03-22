@@ -50,7 +50,7 @@ php7.1-mbstring php7.1-zip \
 php-pear php-apcu php-memcached php-redis
 
 # Nginx & PHP-FPM
-apt-get install -y nginx php-fpm
+apt-get install -y nginx php7.1-fpm
 
 # Enable mcrypt
 phpenmod mcrypt
