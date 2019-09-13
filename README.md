@@ -16,7 +16,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 ### Pull homestead image
 ```shell
-docker pull shincoder/homestead:php7.2
+docker pull shincoder/homestead:php7.3
 ```
 
 ### Clone && Edit docker-compose.yml
