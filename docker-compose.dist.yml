@@ -1,5 +1,5 @@
 web:
-    image: shincoder/homestead:php7.1
+    image: shincoder/homestead:php7.3
     restart: unless-stopped
     ports:
         - "8000:80" # web
